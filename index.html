@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manta - AI-Powered Credit Card Rewards & Financial Management</title>
+    <meta name="description" content="Maximize credit card rewards and manage all your finances in one intelligent platform. AI-powered recommendations, unified bill management, and community insights.">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #D4AF7A;
+            --light-gold: #E5C896;
+            --dark-bg: #1A1A1A;
+            --darker-bg: #0F0F0F;
+            --card-bg: #242424;
+            --text-light: #E8E8E8;
+            --text-dim: #A0A0A0;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            background: var(--darker-bg);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--gold) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: backgroundScroll 60s linear infinite;
+        }
+
+        @keyframes backgroundScroll {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-50px, -50px) rotate(360deg); }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            color: var(--text-light);
+            padding: 120px 0 140px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(212, 175, 122, 0.1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle at center, rgba(212, 175, 122, 0.08) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.5; transform: translateX(-50%) scale(1.1); }
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--light-gold) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tagline {
+            font-size: 1.6rem;
+            margin-bottom: 35px;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.15rem;
+            max-width: 850px;
+            margin: 0 auto 50px;
+            color: var(--text-dim);
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(212, 175, 122, 0.3) 0%, rgba(212, 175, 122, 0.2) 100%);
+            color: var(--text-dim);
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            box-shadow: none;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            background: rgba(212, 175, 122, 0.15);
+            border: 1px solid rgba(212, 175, 122, 0.3);
+            padding: 10px 24px;
+            border-radius: 30px;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+            color: var(--gold);
+            font-weight: 500;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .status-badge::before {
+            content: '🚀';
+            margin-right: 8px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: var(--dark-bg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 70px;
+            color: var(--text-light);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 25px auto 0;
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 45px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 122, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 122, 0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 122, 0.3);
+            box-shadow: 0 20px 60px rgba(212, 175, 122, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            display: inline-block;
+            filter: grayscale(20%);
+        }
+
+        .feature-title {
+            font-size: 1.6rem;
+            margin-bottom: 18px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .feature-list {
+            margin-top: 20px;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            color: var(--text-dim);
+            padding-left: 28px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* Vision Section */
+        .vision {
+            padding: 100px 0;
+            background: var(--darker-bg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .vision-content {
+            max-width: 950px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .vision-text {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
+        }
+
+        .highlight {
+            padding: 35px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border-left: 3px solid var(--gold);
+            border-top: 1px solid rgba(212, 175, 122, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .highlight:hover {
+            background: rgba(212, 175, 122, 0.05);
+            transform: translateX(5px);
+        }
+
+        .highlight-title {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+            color: var(--gold);
+        }
+
+        .highlight-text {
+            color: var(--text-dim);
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            color: var(--text-light);
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 122, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            margin-bottom: 35px;
+        }
+
+        .footer-title {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .contact-info {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--text-dim);
+        }
+
+        .contact-info a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+
+        .contact-info a:hover {
+            color: var(--light-gold);
+            border-bottom-color: var(--light-gold);
+        }
+
+        .copyright {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.3rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .highlights {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                padding: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <header>
+        <div class="container">
+            <div class="status-badge">Currently in Development</div>
+            <h1 class="logo">Manta</h1>
+            <p class="tagline">AI-Powered Credit Card Rewards & Financial Management</p>
+            <p class="hero-description">
+                The first truly integrated financial platform where AI agents, unified bill management, 
+                and community knowledge converge to maximize your credit card rewards and simplify your financial life.
+            </p>
+            <span class="cta-button">Join the Waitlist</span>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Three Powerful Features, One Platform</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3 class="feature-title">Places & Rewards Explorer</h3>
+                    <p class="feature-description">
+                        Maximize rewards at every purchase with location-based AI recommendations.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Discover nearby restaurants, stores, and venues</li>
+                        <li>AI agent analyzes your credit card portfolio</li>
+                        <li>Get instant recommendations for maximum rewards</li>
+                        <li>Never miss out on bonus categories again</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <h3 class="feature-title">Holdings & Bill Management</h3>
+                    <p class="feature-description">
+                        Your complete financial command center with AI-powered guidance.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Track all credit cards and balances in one place</li>
+                        <li>Unified Bill Manager for credit cards, loans, utilities</li>
+                        <li>Never miss a due date with smart reminders</li>
+                        <li>Personal Finance AI Agent for strategic advice</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3 class="feature-title">Community & Knowledge Hub</h3>
+                    <p class="feature-description">
+                        Learn from others and share your own financial discoveries.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Social feed for credit card tips and experiences</li>
+                        <li>Real-time database of card offers and bonuses</li>
+                        <li>AI insights from Reddit, forums, and 小红书</li>
+                        <li>Calculate if reward strategies are worth it</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="vision">
+        <div class="container">
+            <h2 class="section-title">Our Vision</h2>
+            <div class="vision-content">
+                <p class="vision-text">
+                    We're building the financial platform that should have always existed—one that treats 
+                    your credit cards, bills, and rewards as an integrated system, not isolated pieces. 
+                    By combining AI intelligence with community wisdom, we're making sophisticated financial 
+                    optimization accessible to everyone.
+                </p>
+
+                <div class="highlights">
+                    <div class="highlight">
+                        <div class="highlight-title">Real-Time Intelligence</div>
+                        <div class="highlight-text">
+                            AI agents analyze your exact location and spending context for optimal card recommendations at the point of decision
+                        </div>
+                    </div>
+
+                    <div class="highlight">
+                        <div class="highlight-title">Unified Financial Control</div>
+                        <div class="highlight-text">
+                            One intelligent dashboard manages all payment obligations with an AI assistant acting as your private financial advisor
+                        </div>
+                    </div>
+
+                    <div class="highlight">
+                        <div class="highlight-title">Community-Powered Insights</div>
+                        <div class="highlight-text">
+                            Transform finance from a solitary task into an enjoyable, collaborative experience with shared knowledge
+                        </div>
+                    </div>
+
+                    <div class="highlight">
+                        <div class="highlight-title">Democratized Expertise</div>
+                        <div class="highlight-text">
+                            Making sophisticated credit card optimization strategies accessible to everyday users, not just financial enthusiasts
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <h3 class="footer-title">Get in Touch</h3>
+                <p class="contact-info">
+                    <a href="https://www.linkedin.com/in/jiayu-katrina-liao-385010179/" target="_blank">Jiayu Katrina Liao</a>
+                </p>
+                <p class="contact-info">
+                    <a href="https://www.linkedin.com/in/xinyu-lu-100111/" target="_blank">Xinyu Lu</a>
+                </p>
+            </div>
+            <p class="copyright">© 2025 Manta. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
